@@ -1,0 +1,78 @@
+****Example Robots.txt Format
+*** Allow indexing of everything
+
+User-agent: *
+Disallow:
+
+Or
+
+User-agent: *
+Allow: /
+
+*** Disallow indexing of everything
+
+User-agent: *
+Disallow: /
+
+*** Disallow indexing of a specific folder
+
+User-agent: *
+Disallow: /folder/
+
+*** Disallow Googlebot from indexing of a folder, except for allowing the indexing of one file in that folder
+
+User-agent: Googlebot
+Disallow: /folder1/
+Allow: /folder1/myfile.html
+
+****Background Information on Robots.txt Files
+*** Robots.txt inform search engine spiders how to interact with indexing your content
+    ** By default search engines are greedy. They want to index as much high quality information as they can, 
+        & will assume that they can crawl everything unless you tell them otherwise.
+    ** If you specify data for all bots (*) and data for a specify (Like GoogleBot) then the specific bot commands will be followed while 
+        that engine ignores the global/default bot commands.
+      * If you make a global command that you want to apply to a specific bot and you have other specific rules for that bot 
+        then you need to put those global commands in the section for that bot like:
+        
+        User-agent: *
+        Disallow: /admin/
+        Disallow: /cgi-bin/
+        Disallow: /cgi-bin/weather1
+        Disallow: /cgi-bin/weather1/hw3.cgi
+        Disallow: /se/
+        Disallow: /pr/
+        Disallow: /sendtoafrend/
+        Disallow: /pix/savestories
+        Disallow: /pix/*/*/mw/
+        Disallow: /pix/*/*/prim/
+        Disallow: /pix/*/*/prn/
+        
+        User-agent: googlebot
+        Crawl-delay: 2
+        Disallow: /cgi-bin/weather1
+        Disallow: /cgi-bin/weather1/hw3.cgi
+        
+      * When you block URLs from being indexed in Google via robot.txt. They may still show those pages as URL only listing in their 
+        search results. A better solution for completely blocking the index of a particular page is to use a robots noindex meta tag 
+        on a per page bases. You can tell them to not index a page, or to not index a page and to not follow outbound links by inserting 
+        either of the following code bits in the HTML head of your document that you do not want indexed.
+        
+         ++++ <meta name = "robots" content = "noindex"> <-- The page is not indexed, but links may be followed.
+         ++++ <meta name = "robots" content = "noindex, nofollow"> <-- The page is not indexed & the links are not followed,
+         
+         ++++ Please note that if you do both: block the search engines in robots.txt and via the meta tags, then the robots.txt command 
+         is the primary driver, as they may not crawl the page to see the meta tags, so the URL may still appear in the search result 
+         listed URL - only.
+       * If you do not have a robots.txt file, your server logs will return 404 errors whenever a bot tries to access your robots.txt file.
+         You can upload a blank text file named robots.txt in the root of your site (ie: http://abc.com/robots.txt) if you want to stop
+         getting 404 errors, but do not want to offer any specific commands for bots.
+       * Some search engines allow you to specify the address of an XML sitemap in your robots.txt file, but if your site is small & well 
+         structured with a clean link structure you should not need to create an XML sitemap. For larger sites with multiple divisions,
+         sites that generate massive amounts of content each day, and/or sites with rapidly rotating stock, XML sitemaps can be a helpful
+         tool for helping to get important content indexed & monitoring relative performance of indexing depth by pagetype.
+  *** Crawl Delay
+    ** Search engines allow you to set crawl priorities:
+       * Google does not support the crawl delay command directly, but you can lower your crawl priority inside Google Webmaster Central
+         ++++ Google has the highest volume of search market share in most markets, and has one of the most effecient crawling priorities,
+         So you should not need to change your Google crawl priority
+         http://tools.seobook.com/robots-txt/
