@@ -1,8 +1,8 @@
 ****Example Robots.txt Format
 *** Allow indexing of everything
 
-User-agent: *
-Disallow:
+ User-agent: *
+ Disallow:
 
 Or
 
@@ -34,23 +34,23 @@ Allow: /folder1/myfile.html
       * If you make a global command that you want to apply to a specific bot and you have other specific rules for that bot 
         then you need to put those global commands in the section for that bot like:
         
-        User-agent: *
-        Disallow: /admin/
-        Disallow: /cgi-bin/
-        Disallow: /cgi-bin/weather1
-        Disallow: /cgi-bin/weather1/hw3.cgi
-        Disallow: /se/
-        Disallow: /pr/
-        Disallow: /sendtoafrend/
-        Disallow: /pix/savestories
-        Disallow: /pix/*/*/mw/
-        Disallow: /pix/*/*/prim/
-        Disallow: /pix/*/*/prn/
+         User-agent: *
+         Disallow: /admin/
+         Disallow: /cgi-bin/
+         Disallow: /cgi-bin/weather1
+         Disallow: /cgi-bin/weather1/hw3.cgi
+         Disallow: /se/
+         Disallow: /pr/
+         Disallow: /sendtoafrend/
+         Disallow: /pix/savestories
+         Disallow: /pix/*/*/mw/
+         Disallow: /pix/*/*/prim/
+         Disallow: /pix/*/*/prn/
         
-        User-agent: googlebot
-        Crawl-delay: 2
-        Disallow: /cgi-bin/weather1
-        Disallow: /cgi-bin/weather1/hw3.cgi
+         User-agent: googlebot
+         Crawl-delay: 2
+         Disallow: /cgi-bin/weather1
+         Disallow: /cgi-bin/weather1/hw3.cgi
         
       * When you block URLs from being indexed in Google via robot.txt. They may still show those pages as URL only listing in their 
         search results. A better solution for completely blocking the index of a particular page is to use a robots noindex meta tag 
@@ -75,4 +75,40 @@ Allow: /folder1/myfile.html
        * Google does not support the crawl delay command directly, but you can lower your crawl priority inside Google Webmaster Central
          ++++ Google has the highest volume of search market share in most markets, and has one of the most effecient crawling priorities,
          So you should not need to change your Google crawl priority
-         http://tools.seobook.com/robots-txt/
+       * In most major markets outsidee of Japan Yahoo! Search is powered by Bing, while Google powers search in Yahoo! Japan
+         
+          User-agent: Slurp
+          Crawl-delay: 10
+         
+         Where the 10 is in seconds.
+         
+       * Microsoft's information for Bing is located
+  *** Robots.txt Wildcard Matching
+      Google and Microsoft's Bing allow the use of wildcards in robots.txt files.
+      To block access to all URLs that include a question mark (?), you should use the following entry:
+       
+       User-agent: *
+       Disallow: /*?
+       
+      You can use the $ character to specify matching the end of the URL. For instance, to block an URLs that end with .asp, you could 
+      use the following entry:
+       
+       User-agent: Googlebot
+       Disallow: /*.asp$
+       
+   *** URL Specific Tips
+       Part of creating a clean and effective robots.txt file is ensuring that your site structure and filenames are created based on 
+       sound Stategy. What are some of my favorite tips?
+       ** Avoid Dates in URLs: If that some point in time you want to filter out date based archives then you do not want dates in your
+          file paths of your regular content pages or it is easy to filter out your regular URLs. There are numerous other reasons to 
+          avoid dates in URLs as well.
+       ** End URLs With a Backslash: If you want to block a short filename and it does not have a backslash at the end if it then you could
+          accidentally end up blocking other important pages.
+       ** Dynamic URL Rewriting: Yahoo! Search offers dynamic URL rewriting, but since most other search engines do not use it, you are 
+          probably better off rewriting your URLs in your .htaccess file rather than creating additional rewrites just for Yahoo! Search.
+          Google offers parameter handling options & rel=canonical, but it is generally best to fix your public facing URLs in a way that
+          keeps them as consistent as possible, such that
+          * If you ever migrate between platforms you do not have many stray links pointing into page that no longer exist.
+          * You do not end up developing a complex maze of gotchas as you change platforms over the years.
+       ** Site across markets & languages: Search engines generally try to give known local results a ranking boost, though in some cases
+          it can be hard to build links into many local versions of a site. Google offers hreflang to help them know which URL 
